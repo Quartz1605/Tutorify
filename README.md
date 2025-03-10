@@ -1,2 +1,2 @@
 # Tutorify
-Making getting tutors easier
+<p>Connecting parents with tutors.</p>
