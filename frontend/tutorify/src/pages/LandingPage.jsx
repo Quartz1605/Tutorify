@@ -1,43 +1,47 @@
 import React from "react";
-import students from "./assets/students.svg"
+import students from "../assets/students.svg"
 import { useState } from "react";
+import Verify from "./Verify";
 
 
 const LandingPage = () => {
 
-  
-  const [email,setEmail] = useState("")
+
+  const [email, setEmail] = useState("")
+  const [isVerifyopen,setisVerifyopen] = useState(false)
 
   const sendOTP = async () => {
 
-    try{
-      const response = await fetch("http://127.0.0.1:8000/auth/send-otp/",{
-        method : "POST",
-        headers : {
-          "Content-type" : "application/json"
+    try {
+      const response = await fetch("http://127.0.0.1:8000/auth/send-otp/", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json"
         },
-        body : JSON.stringify({"email" : email})
+        body: JSON.stringify({ "email": email })
       })
 
       const data = await response.json()
 
-      if(response.ok){
+      if (response.ok) {
         alert("OTP Sent Sucessfully.")
+        //setisVerifyopen(true)
+
       }
-      else{
+      else {
         alert("Error :", data.message)
       }
     }
-    catch(error){
-      console.log("Error sending OTP:",error)
+    catch (error) {
+      console.log("Error sending OTP:", error)
       alert("Failed to send OTP, try again.")
 
     }
 
 
   }
-  
-  
+
+
   return (
     <>
       <header class="relative flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-amber text-md py-3 dark:bg-neutral-800 h-[75px] border-1">
@@ -72,16 +76,18 @@ const LandingPage = () => {
           <div className="text-[45px] font-bold mt-10" style={{ fontFamily: 'sans-serif' }}>Smart Learning Starts with the Right <b className="text-blue-500">Tutor</b>.</div>
           <div className="text-lg">Trusted by more than <b className="text-blue-500">Lakhs</b> of Parents.</div>
           <div className="mt-10">
-            
-            <input type="email" className="border-2  px-3 py-2.5 w-[645px] rounded-lg outline-none" placeholder="Enter your email address." onChange={(e) => {setEmail(e.target.value)}}></input>
+
+            <input type="email" className="border-2  px-3 py-2.5 w-[645px] rounded-lg outline-none" placeholder="Enter your email address." onChange={(e) => { setEmail(e.target.value) }}></input>
             <div className="text-sm ml-2 mt-[6px] text-[#959595]">
               You'll receive an OTP for verification.
             </div>
-            
-              <button className="bg-blue-500 justify-center text-center mt-9 py-4 px-8 rounded-xl text-white font-bold ml-60 hover:cursor-pointer hover:bg-blue-700" onClick={sendOTP}>
+
+            <Verify isOpen={isVerifyopen} onClose={() => {setisVerifyopen(false)}} email={email} />
+
+            <button className="bg-blue-500 justify-center text-center mt-9 py-4 px-8 rounded-xl text-white font-bold ml-60 hover:cursor-pointer hover:bg-blue-700" onClick={() => {sendOTP(),setisVerifyopen(true)}}>
               Welcome Learner !
-              </button>
-            
+            </button>
+
 
           </div>
 

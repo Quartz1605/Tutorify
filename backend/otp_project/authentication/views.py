@@ -35,7 +35,8 @@ class VerifyOTP(APIView):
     def post(self, request):
         email = request.data.get('email')
         otp_code = request.data.get('otp')
-
+        print(request.data)
+        
         try:
             user = User.objects.get(email=email)
             otp_record = OTP.objects.filter(user=user, otp_code=otp_code).last()
