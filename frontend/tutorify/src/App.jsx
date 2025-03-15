@@ -4,7 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import LandingPage from './pages/LandingPage'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import Home from './pages/Home'
+import TutorifyLandingPage from './pages/Home'
 
 function App() {
   
@@ -14,7 +14,7 @@ function App() {
       <Routes>
 
         <Route path="/" element={<LandingPage />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/home" element={<TutorifyLandingPage />} />
 
       </Routes>
 

@@ -8,11 +8,21 @@ const LandingPage = () => {
 
 
   const [email, setEmail] = useState("")
-  const [isVerifyopen,setisVerifyopen] = useState(false)
+  const [isVerifyopen, setisVerifyopen] = useState(false)
+  const [error, setError] = useState("")
 
   const sendOTP = async () => {
 
+    if (email.trim() === "") {
+      setError("Invalid Email id !");
+      setisVerifyopen(false);
+      return;
+
+    }
+
+
     try {
+      setError("")
       const response = await fetch("http://127.0.0.1:8000/auth/send-otp/", {
         method: "POST",
         headers: {
@@ -24,8 +34,8 @@ const LandingPage = () => {
       const data = await response.json()
 
       if (response.ok) {
-        alert("OTP Sent Sucessfully.")
-        //setisVerifyopen(true)
+
+        setisVerifyopen(true)
 
       }
       else {
@@ -61,7 +71,7 @@ const LandingPage = () => {
           </div>
           <div id="hs-navbar-example" class="hidden hs-collapse overflow-hidden transition-all duration-300 basis-full grow sm:block" aria-labelledby="hs-navbar-example-collapse">
             <div class="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:ps-5">
-              <button class="font-medium text-blue-500 focus:outline-hidden bg-white px-6 py-3 rounded-lg border-1 border-black hover:cursor-pointer hover:text-white hover:bg-blue-500 hover:border-blue-500" href="#" aria-current="page">Log in</button>
+              <button class="font-medium text-blue-500 focus:outline-hidden bg-white px-6 py-3 rounded-lg border-1 border-black hover:cursor-pointer hover:text-white hover:bg-blue-500 hover:border-blue-500" href="#" aria-current="page" onClick={() => { setisVerifyopen(true) }}>Log in</button>
 
 
               <button class="bg-blue-500 font-medium px-6 py-3 rounded-lg hover:text-white focus:outline-hidden text-white focus:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500 hover:cursor-pointer hover:bg-blue-700" href="#">Join Us !</button>
@@ -79,14 +89,19 @@ const LandingPage = () => {
 
             <input type="email" className="border-2  px-3 py-2.5 w-[645px] rounded-lg outline-none" placeholder="Enter your email address." onChange={(e) => { setEmail(e.target.value) }}></input>
             <div className="text-sm ml-2 mt-[6px] text-[#959595]">
-              You'll receive an OTP for verification.
+              You'll receive an OTP via email for verification.
             </div>
 
-            <Verify isOpen={isVerifyopen} onClose={() => {setisVerifyopen(false)}} email={email} />
+            <Verify isOpen={isVerifyopen} onClose={() => { setisVerifyopen(false) }} email={email} />
 
-            <button className="bg-blue-500 justify-center text-center mt-9 py-4 px-8 rounded-xl text-white font-bold ml-60 hover:cursor-pointer hover:bg-blue-700" onClick={() => {sendOTP(),setisVerifyopen(true)}}>
+            {error && <p className="text-red-500 ml-69 font-semibold">{error}</p>}
+
+            <button className="bg-blue-500 justify-center text-center mt-7 py-4 px-8 rounded-xl text-white font-bold ml-60 hover:cursor-pointer hover:bg-blue-700" onClick={sendOTP}>
               Welcome Learner !
             </button>
+
+
+
 
 
           </div>
@@ -96,6 +111,22 @@ const LandingPage = () => {
           <img src={students} className="h-[400px] w-[800px]"></img>
         </div>
       </div>
+
+
+      <section className="relative h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-blue-400 text-white overflow-hidden">
+        <div className="absolute inset-0 bg-[url(https://images.pexels.com/photos/4474005/pexels-photo-4474005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)] bg-cover opacity-50"></div>
+        <div className="max-w-4xl mx-auto text-center px-4 relative z-10">
+          <h1 className="text-6xl font-bold mb-6 animate-fade-in">
+            Unlock Your Potential with <span className="text-blue-100">Tutorify</span>
+          </h1>
+          <p className="text-xl mb-8 animate-fade-in delay-100">
+            Join thousands of students who are achieving their academic goals with personalized tutoring.
+          </p>
+          <button className="bg-white text-blue-500 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition duration-300 shadow-md hover:shadow-lg animate-fade-in delay-200">
+            Start Learning Today
+          </button>
+        </div>
+      </section>
 
 
     </>

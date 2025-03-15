@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 const Verify = ({isOpen,onClose,email}) => {
 
   const [otp,setOtp] = useState("")
+  const [error,setError] = useState("")
   const navigate = useNavigate()
 
   const verifyotp = async () => {
@@ -28,7 +29,7 @@ const Verify = ({isOpen,onClose,email}) => {
         
       }
       else{
-        alert("Error :" + data.message)
+        setError("Invalid or expired OTP !")
       }
     }
     
@@ -70,8 +71,9 @@ const Verify = ({isOpen,onClose,email}) => {
 
         
 
-        <div className="flex items-center justify-center">
-          <button className="mt-8 bg-blue-500 text-amber-50 px-8 py-3 rounded-xl hover:bg-blue-700 transition-all duration-200 hover:cursor-pointer" onClick={verifyotp}>Verify</button>
+        <div className="flex flex-col items-center justify-center">
+          {error && <p className="text-red-500 font-semibold">{error}</p>}
+          <button className="mt-6 bg-blue-500 text-amber-50 px-8 py-3 rounded-xl hover:bg-blue-700 transition-all duration-200 hover:cursor-pointer" onClick={verifyotp}>Verify</button>
         </div>
       </div>
     </div>
