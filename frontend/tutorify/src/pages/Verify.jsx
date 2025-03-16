@@ -52,7 +52,7 @@ const Verify = ({isOpen,onClose,email}) => {
   }
 
   return(
-    <div className="fixed inset-0 flex items-center justify-center bg-transparent backdrop-blur-md">
+    <div className="fixed inset-0 flex items-center justify-center bg-transparent backdrop-blur-md z-100">
       <div className="bg-white bg-opacity-40 backdrop-blur-lg p-6 rounded-2xl shadow-xl w-[400px]">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold">Enter OTP</h2>
@@ -73,7 +73,7 @@ const Verify = ({isOpen,onClose,email}) => {
 
         <div className="flex flex-col items-center justify-center">
           {error && <p className="text-red-500 font-semibold">{error}</p>}
-          <button className="mt-6 bg-blue-500 text-amber-50 px-8 py-3 rounded-xl hover:bg-blue-700 transition-all duration-200 hover:cursor-pointer" onClick={verifyotp}>Verify</button>
+          <button className="mt-6  text-amber-50 px-8 py-3 rounded-xl bg-gradient-to-r from-blue-800 to-blue-500 hover:from-blue-500 hover:to-blue-800 transition-all duration-200 hover:cursor-pointer" onClick={verifyotp}>Verify</button>
         </div>
       </div>
     </div>
