@@ -173,7 +173,7 @@ const LandingPage = () => {
               </span>
               <div className="mt-10 flex justify-center space-x-4">
                 <button
-                  onClick={handleBookNow}
+                  onClick={openSideBar}
                   className="px-8 py-4 rounded-lg text-white bg-gradient-to-r from-blue-800 to-blue-500 hover:from-blue-500 hover:to-blue-800 font-bold shadow-lg hover:shadow-blue-500/20 transform hover:scale-105 transition-all duration-300"
                 >
                   Book A Tutor Now
@@ -255,7 +255,7 @@ const LandingPage = () => {
           </div>
 
           <div className="mt-12 text-center">
-            <button className="px-8 py-4 rounded-lg text-black bg-opacity-20 bg-white hover:bg-opacity-30 font-bold transition-all duration-300">
+            <button className="px-8 py-4 rounded-lg text-black bg-opacity-20 bg-white hover:bg-opacity-30 font-bold transition-all duration-300" onClick={openSideBar}>
               View All Subjects
             </button>
           </div>
@@ -268,10 +268,11 @@ const LandingPage = () => {
 
         <button id="closeSidebar" className="text-white text-2xl absolute top-3 right-4" onClick={closeSidebar}>&times;</button>
 
-        <span className="mb-4 text-center text-4xl bg-clip-text bg-gradient-to-r from-blue-700 to-blue-400 text-transparent">Login or Signup</span>
+        <p className='font-extrabold text-5xl text-center mb-10'>Tutorify</p>
+        <span className="mb-4 text-center text-4xl bg-clip-text bg-gradient-to-r from-blue-700 to-blue-400 text-transparent ">Login or Signup</span>
 
 
-        <input type="email" className="mt-15 border-2  px-3 py-2.5 w-[500px] rounded-lg outline-none text-blue-900 " placeholder="Enter your email address." onChange={(e) => { setEmail(e.target.value) }}></input>
+        <input type="email" className="mt-8 border-2  px-3 py-2.5 w-[500px] rounded-lg outline-none text-blue-900 " placeholder="Enter your email address." onChange={(e) => { setEmail(e.target.value) }}></input>
         <div className="text-sm ml-2 mt-[6px] text-gray-500">
           You'll receive an OTP via email for verification.
         </div>
@@ -301,7 +302,7 @@ const LandingPage = () => {
               </p>
               <div className="sm:flex sm:space-x-4">
                 <button
-                  onClick={handleBookNow}
+                  onClick={openSideBar}
                   className="w-full sm:w-auto mb-4 sm:mb-0 px-8 py-4 rounded-lg bg-white text-blue-600 font-bold shadow-lg hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 cursor-pointer"
                 >
                   Book Your First Session
