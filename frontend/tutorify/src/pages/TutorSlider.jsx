@@ -36,22 +36,65 @@ const TutorSlider = () => {
       >
         {tutorInfo.map((tutor, index) => (
           <SwiperSlide key={tutor.id || index} className="flex justify-center">
-            <div className="bg-white shadow-lg rounded-lg py-6 px-4 text-center border border-gray-200 hover:shadow-xl transition w-[90%]">
-              <img
-                src="https://i.ibb.co/BV83kmpx/tutor-UP-1.jpg"
-                alt={tutor.name}
-                className="w-full h-[400px] rounded-3xl object-cover"
-              />
-              <div className="text-3xl font-semibold text-yellow-400 mt-4" style={{fontFamily:"'Rubik',sans-serif"}}>{tutor.name}</div>
+          <div className="bg-white shadow-lg rounded-2xl overflow-hidden border border-blue-100 hover:shadow-xl transition duration-300 w-[90%] relative">
+            {/* Enhanced image container with curved bottom edge */}
+            <div className="relative h-72">
+              <div className="absolute inset-0 z-10">
+                <img
+                  src={tutor.image}
+                  alt={tutor.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
               
-              <div className="flex items-center justify-between mt-4 px-4">
-                <span className="text-xl font-bold text-green-600">Experience: {tutor.yoe}</span>
-                <span className="text-xl font-bold text-green-600">
-                  Teaches: <b className="bg-blue-600 py-2 px-4 rounded-xl text-white">{tutor.subject}</b>
-                </span>
+              {/* Overlay with gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-blue-900 via-blue-900/40 to-transparent z-20"></div>
+              
+              {/* Curved bottom shape */}
+              <div className="absolute -bottom-6 left-0 right-0 h-12 bg-white rounded-t-3xl z-30"></div>
+              
+              {/* Name overlay on image */}
+              <div className="absolute bottom-8 left-0 right-0 text-center z-40">
+                <h3 className="text-2xl font-bold text-white px-4 py-2 inline-block rounded-lg shadow-lg bg-blue-800/80 backdrop-blur-sm" style={{fontFamily:"'Rubik',sans-serif"}}>
+                  {tutor.name}
+                </h3>
               </div>
             </div>
-          </SwiperSlide>
+            
+            {/* Content area with offset to account for curve */}
+            <div className="p-6 pt-8 bg-white">
+              {/* Info cards */}
+              <div className="flex flex-col space-y-3">
+                {/* Experience */}
+                <div className="flex items-center bg-blue-50 p-3 rounded-lg shadow-sm">
+                  <div className="w-10 h-10 flex items-center justify-center bg-blue-600 rounded-full mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <span className="font-medium">
+                    <span className="text-blue-800">Experience:</span> {tutor.yoe}
+                  </span>
+                </div>
+                
+                {/* Subject */}
+                <div className="flex items-center bg-blue-50 p-3 rounded-lg shadow-sm">
+                  <div className="w-10 h-10 flex items-center justify-center bg-blue-600 rounded-full mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                  </div>
+                  <span className="font-medium">
+                    <span className="text-blue-800">Teaches:</span> {tutor.subject}
+                  </span>
+                </div>
+              </div>
+            </div>
+            
+            {/* Blue accent at bottom */}
+            <div className="h-2 bg-blue-600 w-full"></div>
+          </div>
+        </SwiperSlide>
         ))}
       </Swiper>
     </div>
