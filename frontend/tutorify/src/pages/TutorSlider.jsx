@@ -25,14 +25,14 @@ const TutorSlider = () => {
   }, []);
 
   return (
-    <div className="px-17"> {/* Adds space from screen edges */}
+    <div className="px-17"> 
       <Swiper
         modules={[Navigation]}
-        spaceBetween={0} // No gap between slides
-        slidesPerView={1.9} // Makes sure each slide takes full space with slight overlap
-        centeredSlides={true} // Centers active slide
-        navigation={true} // Show navigation arrows
-        loop={tutorInfo.length > 1} // Enable loop if more than 1 tutor
+        spaceBetween={0} 
+        slidesPerView={1.9} 
+        centeredSlides={true} 
+        navigation={true} 
+        loop={tutorInfo.length > 1} 
       >
         {tutorInfo.map((tutor, index) => (
           <SwiperSlide key={tutor.id || index} className="flex justify-center">
