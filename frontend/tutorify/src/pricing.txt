@@ -95,3 +95,8 @@ Crazzy Price component.
           </div>
         </div>
       </div>
+
+from tutors.models import Tutor
+   ...> tutors = [Tutor(name="Jane",yoe="2yrs",subject="Algebra"),Tutor(name="Pratham",yoe="4yrs",subject="Python"),Tutor(name="Livia",yoe="1yr
+s",subject="Calculus"),Tutor(name="Clark",yoe="9yrs",subject="Spanish"),Tutor(name="Charlotte",yoe="3yrs",subject="Chemistry"),Tutor(name="Adam",yoe="4yrs",subject="Physics")]
+   ...> Tutor.objects.bulk_create(tutors)
