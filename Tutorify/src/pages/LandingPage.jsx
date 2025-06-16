@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 
 const LandingPage = () => {
   
-  const [email, setEmail] = useState("")
-  const [isVerifyopen, setisVerifyopen] = useState(false)
-  const [error, setError] = useState("")
+ 
   
   
   const [isLoaded, setIsLoaded] = useState(false);
@@ -102,9 +101,9 @@ const LandingPage = () => {
             </div>
             <div className="flex items-center space-x-4">
 
-              <button className="px-6 py-2 rounded-3xl text-white bg-gradient-to-r from-blue-800 to-blue-500 hover:from-blue-500 hover:to-blue-800 transform hover:scale-105 transition-all duration-300 hover: cursor-pointer" >
+              <Link to="/register/"><button className="px-6 py-2 rounded-3xl text-white bg-gradient-to-r from-blue-800 to-blue-500 hover:from-blue-500 hover:to-blue-800 transform hover:scale-105 transition-all duration-300 hover: cursor-pointer" >
                 Get Started !
-              </button>
+              </button></Link>
             </div>
           </div>
         </div>
