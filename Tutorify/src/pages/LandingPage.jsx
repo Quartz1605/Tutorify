@@ -104,6 +104,9 @@ const LandingPage = () => {
               <Link to="/register/"><button className="px-6 py-2 rounded-3xl text-white bg-gradient-to-r from-blue-800 to-blue-500 hover:from-blue-500 hover:to-blue-800 transform hover:scale-105 transition-all duration-300 hover: cursor-pointer" >
                 Get Started !
               </button></Link>
+
+              <Link to="/login/">
+              <button className="px-6 py-2 rounded-3xl text-white bg-gradient-to-r from-blue-800 to-blue-500 hover:from-blue-500 hover:to-blue-800 transform hover:scale-105 transition-all duration-300 hover: cursor-pointer">Login</button></Link>
             </div>
           </div>
         </div>

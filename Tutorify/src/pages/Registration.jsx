@@ -34,6 +34,35 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try{
+      console.log(formData)
+      
+      const response = await fetch("http://127.0.0.1:8000/api/register_student/",{
+        "method" : "POST",
+        "headers" : {
+          "Content-type" : "application/json"
+        },
+        "body" : JSON.stringify(formData),
+      })
+
+      const data = await response.json();
+
+      if(response.ok){
+        
+        localStorage.setItem("access_token",data.access);
+        console.log("Registered Successfully");
+        alert("Successfully registered");
+
+      }else{
+        alert("Backend error");
+        console.log("error" + data.errors);
+      }
+
+    }
+    catch(error){
+      console.log("Error is " + error);
+    }
     
   };
 
