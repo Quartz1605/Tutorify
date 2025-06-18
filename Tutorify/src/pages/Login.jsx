@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff, User, Lock } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 export default function Login() {
@@ -153,9 +153,9 @@ export default function Login() {
           <div className="mt-6 text-center">
             <p className="text-slate-400 text-sm">
               Don't have an account?{' '}
-              <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors font-medium">
+              <Link to="/register/" className="text-blue-400 hover:text-blue-300 transition-colors font-medium">
                 Sign up
-              </a>
+              </Link>
             </p>
           </div>
         </div>
