@@ -1,14 +1,56 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff, User, Lock } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate()
+  
+  const [formData,setFormData] = useState({
+    "username" : '',
+    "password" : '',
+  });
+
+  const handleChange = (e) => {
+    setFormData({... formData,[e.target.name] : e.target.value})
+  }
+  
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try{
+      console.log(formData)
+      const response = await fetch("http://127.0.0.1:8000/api/token/",{
+        "method" : "POST",
+        "headers" : {
+          "Content-type" : "application/json"
+        },
+        "body" : JSON.stringify(formData),
+      })
+
+      const data = await response.json();
+
+      if(response.ok){
+
+        console.log("Logged in successfully");
+        localStorage.setItem("access_token",data.access);
+        alert("Logged in Successfuly");
+
+        setTimeout(() => {
+          navigate("/home/")
+        },1000)
+      }
+      else{
+        alert("Backend error");
+        console.log("Errors " + data.errors)
+      }
+
+    }catch(error){
+      console.log("error" + error)
+    }
     
     
   };
@@ -42,8 +84,9 @@ export default function Login() {
                 <input
                   id="username"
                   type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
                   className="w-full pl-10 pr-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   placeholder="Enter your username"
                   required
@@ -63,8 +106,9 @@ export default function Login() {
                 <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
                   className="w-full pl-10 pr-12 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   placeholder="Enter your password"
                   required
@@ -100,7 +144,7 @@ export default function Login() {
             {/* Login Button */}
             <button
               type="submit"
-              disabled={isLoading}
+              onClick={handleSubmit}
               className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-800 disabled:opacity-50 disabled:cursor-not-allowed"
             >Sign in</button>
           </div>

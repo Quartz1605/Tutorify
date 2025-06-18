@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const navigate = useNavigate()
+
   const [formStep, setFormStep] = useState(0);
   const [formData, setFormData] = useState({
     username: "",
@@ -53,6 +56,10 @@ const Register = () => {
         localStorage.setItem("access_token",data.access);
         console.log("Registered Successfully");
         alert("Successfully registered");
+
+        setTimeout(() => {
+          navigate("/home/")
+        },1000)
 
       }else{
         alert("Backend error");
