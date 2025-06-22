@@ -16,9 +16,11 @@ import {
 } from "lucide-react";
 
 const TutorifyReg = () => {
+  
+  const [formErrors, setFormErrors] = useState({});
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
-    // Step 1 - Personal Info
+    
     username: "",
     password: "",
     full_name: "",
@@ -28,19 +30,19 @@ const TutorifyReg = () => {
     address: "",
     profile_picture: null,
 
-    // Step 2 - Professional Info
+    
     highest_qualification: "",
     subjects_taught: "",
     teaching_experience: "",
     language_spoken: "",
 
-    // Step 3 - Preferences
+    
     teaching_mode: "",
     age_group: "",
     travel_preference: "",
     fee_range: "",
 
-    // Step 4 - Additional Details
+    
     bio: "",
     tagline: "",
     intro_video: null,
@@ -60,6 +62,16 @@ const TutorifyReg = () => {
       [field]: file,
     }));
   };
+
+  function handleSubmit(e){
+    e.preventdefault();
+
+    
+
+
+
+
+  }
 
   const nextStep = () => {
     if (currentStep < 4) setCurrentStep(currentStep + 1);
@@ -82,8 +94,8 @@ const TutorifyReg = () => {
     },
     {
       icon: <Settings className="w-5 h-5" />,
-      title: "Preferences",
-      desc: "How you like to teach",
+      title: "Preferences ",
+      desc: "How you like to teach  (You can always edit these later on)",
     },
     {
       icon: <FileText className="w-5 h-5" />,
@@ -118,6 +130,7 @@ const TutorifyReg = () => {
     <div className="space-y-6">
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
           <div className="space-y-2">
             <label className="block text-blue-300 text-sm font-medium">
               Username
@@ -130,6 +143,7 @@ const TutorifyReg = () => {
               placeholder="Your unique username"
             />
           </div>
+
           <div className="space-y-2">
             <label className="block text-blue-300 text-sm font-medium">
               Password
@@ -287,7 +301,7 @@ const TutorifyReg = () => {
           onChange={(e) => handleInputChange("subjects_taught", e.target.value)}
           className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600/50 rounded-xl text-blue-100 placeholder-slate-400 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all backdrop-blur-sm resize-none"
           rows="3"
-          placeholder="Mathematics, Physics, Chemistry, English Literature..."
+          placeholder="Mathematics, Physics, Chemistry, English Literature,Computer Science"
         />
       </div>
 
@@ -300,7 +314,7 @@ const TutorifyReg = () => {
           value={formData.language_spoken}
           onChange={(e) => handleInputChange("language_spoken", e.target.value)}
           className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600/50 rounded-xl text-blue-100 placeholder-slate-400 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all backdrop-blur-sm"
-          placeholder="English, Spanish, French, Mandarin..."
+          placeholder="Hindi,English,Malayali,Telugu,French"
         />
       </div>
     </div>
@@ -335,8 +349,7 @@ const TutorifyReg = () => {
           >
             <option value="">Select Age Group</option>
             <option value="elementary">Elementary (5-10 years)</option>
-            <option value="middle">Middle School (11-13 years)</option>
-            <option value="high">High School (14-18 years)</option>
+            <option value="high">Secondary (10-18 years)</option>
             <option value="college">College (18+ years)</option>
             <option value="adult">Adult Learners</option>
             <option value="all">All Ages</option>
@@ -365,18 +378,18 @@ const TutorifyReg = () => {
         </div>
         <div className="space-y-2">
           <label className="block text-blue-300 text-sm font-medium">
-            Hourly Rate Range
+            Fee Range (per Session)
           </label>
           <select
             value={formData.fee_range}
             onChange={(e) => handleInputChange("fee_range", e.target.value)}
             className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600/50 rounded-xl text-blue-100 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all backdrop-blur-sm"
           >
-            <option value="">Select Rate Range</option>
-            <option value="10-20">$10 - $20</option>
-            <option value="20-35">$20 - $35</option>
-            <option value="35-50">$35 - $50</option>
-            <option value="50+">$50+</option>
+            <option value="">Select Fee Range</option>
+            <option value="10-20">₹100-₹1000</option>
+            <option value="20-35">₹1000 - ₹2500</option>
+            <option value="35-50">₹2500 - ₹3500</option>
+            <option value="50+">₹3500+</option>
           </select>
         </div>
       </div>
@@ -610,11 +623,7 @@ const TutorifyReg = () => {
                   ) : (
                     <button
                       className="flex items-center px-8 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-xl font-medium hover:from-green-700 hover:to-green-800 transition-all shadow-lg shadow-green-600/25 hover:shadow-xl hover:shadow-green-600/30"
-                      onClick={() =>
-                        alert(
-                          "🎉 Welcome to Tutorify! Your registration is complete and under review."
-                        )
-                      }
+                      onClick={handleSubmit}
                     >
                       Complete Registration
                       <CheckCircle className="w-5 h-5 ml-2" />
