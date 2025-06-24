@@ -16,11 +16,9 @@ import {
 } from "lucide-react";
 
 const TutorifyReg = () => {
-  
   const [formErrors, setFormErrors] = useState({});
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
-    
     username: "",
     password: "",
     full_name: "",
@@ -30,19 +28,16 @@ const TutorifyReg = () => {
     address: "",
     profile_picture: null,
 
-    
     highest_qualification: "",
     subjects_taught: "",
     teaching_experience: "",
     language_spoken: "",
 
-    
     teaching_mode: "",
     age_group: "",
     travel_preference: "",
     fee_range: "",
 
-    
     bio: "",
     tagline: "",
     intro_video: null,
@@ -63,14 +58,8 @@ const TutorifyReg = () => {
     }));
   };
 
-  function handleSubmit(e){
+  function handleSubmit(e) {
     e.preventdefault();
-
-    
-
-
-
-
   }
 
   const nextStep = () => {
@@ -130,7 +119,6 @@ const TutorifyReg = () => {
     <div className="space-y-6">
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          
           <div className="space-y-2">
             <label className="block text-blue-300 text-sm font-medium">
               Username
@@ -243,6 +231,11 @@ const TutorifyReg = () => {
               }
               className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600/50 rounded-xl text-blue-100 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all backdrop-blur-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-600/80 file:text-white hover:file:bg-blue-600 file:transition-all"
             />
+            {formData.profile_picture && (
+              <p className="text-slate-300 text-xs mt-2">
+                Selected: {formData.profile_picture.name}
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -434,11 +427,15 @@ const TutorifyReg = () => {
           onChange={(e) => handleFileChange("intro_video", e.target.files[0])}
           className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600/50 rounded-xl text-blue-100 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all backdrop-blur-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-600/80 file:text-white hover:file:bg-blue-600 file:transition-all"
         />
+        {formData.intro_video && (
+          <p className="text-slate-300 text-xs mt-2">
+            Selected: {formData.intro_video.name}
+          </p>
+        )}
         <p className="text-slate-400 text-xs">
           A 30-60 second video introducing yourself to students
         </p>
       </div>
-
       <div className="space-y-2">
         <label className="block text-blue-300 text-sm font-medium">
           Resume/CV
@@ -449,6 +446,11 @@ const TutorifyReg = () => {
           onChange={(e) => handleFileChange("resume", e.target.files[0])}
           className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600/50 rounded-xl text-blue-100 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all backdrop-blur-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-600/80 file:text-white hover:file:bg-blue-600 file:transition-all"
         />
+        {formData.resume && (
+          <p className="text-slate-300 text-xs mt-2">
+            Selected: {formData.resume.name}
+          </p>
+        )}
         <p className="text-slate-400 text-xs">
           Upload in PDF, DOC, or DOCX format
         </p>
@@ -456,20 +458,22 @@ const TutorifyReg = () => {
     </div>
   );
 
-  const getStepContent = () => {
-    switch (currentStep) {
-      case 1:
-        return renderStep1();
-      case 2:
-        return renderStep2();
-      case 3:
-        return renderStep3();
-      case 4:
-        return renderStep4();
-      default:
-        return renderStep1();
-    }
-  };
+  const getStepContent = () => (
+  <div>
+    <div style={{ display: currentStep === 1 ? "block" : "none" }}>
+      {renderStep1()}
+    </div>
+    <div style={{ display: currentStep === 2 ? "block" : "none" }}>
+      {renderStep2()}
+    </div>
+    <div style={{ display: currentStep === 3 ? "block" : "none" }}>
+      {renderStep3()}
+    </div>
+    <div style={{ display: currentStep === 4 ? "block" : "none" }}>
+      {renderStep4()}
+    </div>
+  </div>
+);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 relative overflow-hidden">

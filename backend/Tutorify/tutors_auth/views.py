@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 # Create your views here.
@@ -12,6 +13,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 class TutorRegisterView(APIView):
 
+  parser_classes = (MultiPartParser, FormParser)
+  
   def post(self,request):
 
     serializer = TutorProfileSerializer(data=request.data)
