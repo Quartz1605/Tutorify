@@ -58,9 +58,67 @@ const TutorifyReg = () => {
     }));
   };
 
-  function handleSubmit(e) {
-    e.preventdefault();
+  const submitTutorForm = async () => {
+  const formDataToSend = new FormData();
+
+  
+
+  // TutorProfile fields
+  formDataToSend.append('username', formData.username);
+  formDataToSend.append('password', formData.password);
+  formDataToSend.append('full_name', formData.full_name);
+  formDataToSend.append('email', formData.email);
+  formDataToSend.append('date_of_birth', formData.date_of_birth);
+  formDataToSend.append('gender', formData.gender);
+  formDataToSend.append('address', formData.address);
+  if (formData.profile_picture) {
+    formDataToSend.append('profile_picture', formData.profile_picture);
   }
+
+  // TutorDetails fields - USE DOT NOTATION
+  formDataToSend.append('details.highest_qualification', formData.highest_qualification);
+  formDataToSend.append('details.subjects_taught', formData.subjects_taught);
+  formDataToSend.append('details.teaching_experience', formData.teaching_experience);
+  formDataToSend.append('details.language_spoken', formData.language_spoken);
+  
+
+  // TutorPreferences fields - USE DOT NOTATION
+  formDataToSend.append('preferences.teaching_mode', formData.teaching_mode);
+  formDataToSend.append('preferences.age_group', formData.age_group);
+  formDataToSend.append('preferences.travel_preference', formData.travel_preference);
+  formDataToSend.append('preferences.fee_range', formData.fee_range);
+
+  // TutorIntroduction fields - USE DOT NOTATION
+  formDataToSend.append('introduction.bio', formData.bio);
+  formDataToSend.append('introduction.tagline', formData.tagline);
+  if (formData.intro_video) {
+    formDataToSend.append('introduction.video', formData.intro_video);
+  }
+  if (formData.resume) {
+    formDataToSend.append('introduction.resume', formData.resume);
+  }
+
+  console.log('FormData contents:');
+  for (let [key, value] of formDataToSend.entries()) {
+    console.log(key, value);
+  }
+  
+  try {
+    const response = await fetch('http://127.0.0.1:8000/tutors/api/tutor-register/', {
+      method: 'POST',
+      body: formDataToSend,
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      console.log('Success:', data);
+    } else {
+      console.error('Errors:', data.errors);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
 
   const nextStep = () => {
     if (currentStep < 4) setCurrentStep(currentStep + 1);
@@ -627,7 +685,7 @@ const TutorifyReg = () => {
                   ) : (
                     <button
                       className="flex items-center px-8 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-xl font-medium hover:from-green-700 hover:to-green-800 transition-all shadow-lg shadow-green-600/25 hover:shadow-xl hover:shadow-green-600/30"
-                      onClick={handleSubmit}
+                      onClick={submitTutorForm}
                     >
                       Complete Registration
                       <CheckCircle className="w-5 h-5 ml-2" />

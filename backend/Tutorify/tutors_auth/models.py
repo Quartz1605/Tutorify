@@ -14,6 +14,10 @@ class TutorProfile(models.Model):
   address = models.TextField()
   profile_picture = models.ImageField(upload_to='tutor_images/')
 
+  def __str__(self):
+    return self.username
+    
+
 class TutorDetails(models.Model):
 
   tutor = models.ForeignKey(TutorProfile,on_delete=models.CASCADE)
@@ -21,6 +25,10 @@ class TutorDetails(models.Model):
   subjects_taught = models.CharField(max_length=100)
   teaching_experience = models.CharField(max_length=50)
   language_spoken = models.CharField(max_length=50)
+
+  def __str__(self):
+    return self.tutor.username
+
   
 
 class TutorPreferences(models.Model):
@@ -31,6 +39,9 @@ class TutorPreferences(models.Model):
   travel_preference = models.CharField(max_length=10)
   fee_range = models.CharField(max_length=10)
 
+  def __str__(self):
+    return self.tutor.username
+
 class TutorIntroduction(models.Model):
 
   tutor = models.ForeignKey(TutorProfile,on_delete=models.CASCADE)
@@ -38,6 +49,10 @@ class TutorIntroduction(models.Model):
   tagline = models.CharField(max_length=100)
   video = models.FileField(upload_to='tutor-intro/')
   resume = models.FileField(upload_to='tutors-resume/')
+
+  def __str__(self):
+    return self.tutor.username
+
 
 
 
