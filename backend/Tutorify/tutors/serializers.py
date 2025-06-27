@@ -1,66 +1,81 @@
 from rest_framework import serializers
-from .models import TutorDetails, TutorIntroduction, TutorProfile, TutorPreferences
+from django.contrib.auth.hashers import make_password
+from accounts.models import User
+from .models import TutorProfile, TutorDetails, TutorPreferences, TutorIntroduction
 
 
 class TutorDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = TutorDetails
-        fields = "__all__"
-        extra_kwargs = {'tutor': {'required': False}}  # allow injection during nested creation
-
-
-class TutorIntroductionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = TutorIntroduction
-        fields = "__all__"
-        extra_kwargs = {'tutor': {'required': False}}
+        fields = ['highest_qualification', 'subjects_taught', 'teaching_experience', 'language_spoken']
 
 
 class TutorPreferencesSerializer(serializers.ModelSerializer):
     class Meta:
         model = TutorPreferences
-        fields = "__all__"
-        extra_kwargs = {'tutor': {'required': False}}
+        fields = ['teaching_mode', 'age_group', 'travel_preference', 'fee_range']
 
 
-class TutorProfileSerializer(serializers.ModelSerializer):
+class TutorIntroductionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TutorIntroduction
+        fields = ['bio', 'tagline', 'video', 'resume']
+        extra_kwargs = {
+            'video': {'required': False},
+            'resume': {'required': False}
+        }
+
+
+class TutorRegistrationSerializer(serializers.ModelSerializer):
+    # TutorProfile fields
+    full_name = serializers.CharField()
+    date_of_birth = serializers.CharField()
+    gender = serializers.CharField()
+    address = serializers.CharField()
+    profile_picture = serializers.ImageField(required=False)
+    
+    # Nested serializers with dot notation fields from frontend
     details = TutorDetailsSerializer()
-    introduction = TutorIntroductionSerializer()
     preferences = TutorPreferencesSerializer()
+    introduction = TutorIntroductionSerializer()
 
     class Meta:
         model = TutorProfile
         fields = [
-            'user',  # include this for OneToOne relation
-            'full_name',
-            'date_of_birth',
-            'gender',
-            'address',
-            'profile_picture',
-            'details',
-            'introduction',
-            'preferences',
+            'full_name', 'date_of_birth', 'gender', 'address', 
+            'profile_picture', 'details', 'preferences', 'introduction'
         ]
-        extra_kwargs = {'user': {'required': False}}
 
     def create(self, validated_data):
         # Extract nested data
         details_data = validated_data.pop('details')
-        introduction_data = validated_data.pop('introduction')
         preferences_data = validated_data.pop('preferences')
-
-        # Get user from context or validated_data
-        user = self.context.get('user') or validated_data.get('user')
-        if not user:
-            raise serializers.ValidationError({"user": "User must be provided in context or data."})
-        validated_data['user'] = user
-
-        # Create main TutorProfile
-        tutor = TutorProfile.objects.create(**validated_data)
-
-        # Create nested linked objects
-        TutorDetails.objects.create(tutor=tutor, **details_data)
-        TutorIntroduction.objects.create(tutor=tutor, **introduction_data)
-        TutorPreferences.objects.create(tutor=tutor, **preferences_data)
-
-        return tutor
+        introduction_data = validated_data.pop('introduction')
+        
+        # Get user from context
+        user = self.context['user']
+        
+        # Create TutorProfile with files handled separately
+        profile_picture = validated_data.pop('profile_picture', None)
+        
+        tutor_profile = TutorProfile.objects.create(
+            user=user,
+            profile_picture=profile_picture,
+            **validated_data
+        )
+        
+        # Handle files in introduction_data separately
+        video = introduction_data.pop('video', None)
+        resume = introduction_data.pop('resume', None)
+        
+        # Create related models
+        TutorDetails.objects.create(tutor=tutor_profile, **details_data)
+        TutorPreferences.objects.create(tutor=tutor_profile, **preferences_data)
+        TutorIntroduction.objects.create(
+            tutor=tutor_profile,
+            video=video,
+            resume=resume,
+            **introduction_data
+        )
+        
+        return tutor_profile

@@ -25,7 +25,7 @@ class TutorDetails(models.Model):
   tutor = models.ForeignKey(TutorProfile,on_delete=models.CASCADE)
   highest_qualification = models.CharField(max_length=100)
   subjects_taught = models.CharField(max_length=100)
-  teaching_experience = models.IntegerField(max_length=50)
+  teaching_experience = models.CharField(max_length=50)
   language_spoken = models.CharField(max_length=50)
 
   def __str__(self):
